@@ -52,66 +52,75 @@ function createNavItems() {
   //Append document fragment to ul
   navList.append(docFragment);
   //Make NodeList of links
-  links = document.querySelectorAll('a');
+  links = document.querySelectorAll('.navbar__menu .menu__link');
 }
+
+//Scroll to anchor ID using scrollTO event
 
 /**
- * 
+ * Iterates over sections NodeList to get the section that corresponds to the link clicked
+ *Scrolls to section and makes it active 
  */
-function setActiveClass() {
-  sections.forEach(section => {
-    //Remove 'active' class from any section that's not currently at the top of the viewport
-    if (Math.floor(section.getBoundingClientRect().top) !== 0) {
-      section.classList.remove("your-active-class");
-    } 
-    //Add 'active' class to the section at the top of the viewport
-    if (Math.floor(section.getBoundingClientRect().top) === 0) {
-      section.classList.add("your-active-class");
-    }
-  });
-}
-
-  /**
-   * Scroll to anchor ID using scrollTO event
-   */
-//function makeActive(){
-//  for (const section of sections) {
-//      const sect = section.getBoundingClientRect();
-//      if (sect.top <= 160 && sect.bottom >= 160) {
-//      //apply active state on current section
-//      section.classList.add("your-active-class");
-//      } else {
-//      //Remove active state from other section
-//      section.classList.remove("your-active-class");
-//      }
-//   }
-//}
-
-function scrollTo(e) {
+function scrollToSection(e) {
   e.preventDefault();
-  //Iterates over sections NodeList to get the section that corresponds to the link clicked then scrolls to section
-  for (let i = 0; i < sections.length; i++){  
-    if (e.target.hash === "#" + sections[i].id) {
-      sections[i].scrollIntoView({
+  sections.forEach(section => {
+    if (e.target.href.includes(section.id)) {
+      section.scrollIntoView({
       behavior: "smooth"
-    });
-  //When scroll is complete, trigger the setActiveClass event handler
-    document.addEventListener("scrollend", setActiveClass);
+      });
     }
-  }
+  })
 }
 
 /** */
-function openNav() {
-  navList.classList.toggle("open");
-  navList.style.width = "18rem";
+function makeActive(){
+//Declare a variable to store targeted section
+  let target;
+  sections.forEach( section => {
+    const rect = section.getBoundingClientRect();
+    //If section is within viewport parameters, set as the target and add 'active' class to it
+    if (rect.top <= 150 && rect.bottom >= 150) {
+      target = section.id;
+      section.classList.add('your-active-class');
+    }
+    //If section is not within parameters, remove 'active' class from it
+    else {
+      section.classList.remove('your-active-class');
+    }
+  })
+  //Iterate over each link
+  links.forEach( link => {
+    //If the link's href matches the targeted section's id, add "active" class to the link
+    if (link.href.includes(target)) {
+      link.classList.add("active");
+    }
+    //If the link's href doesn't match the targeted section's id, remove "active" class from the link  
+    else {
+      link.classList.remove("active");
+    }
+  })
 }
 
-/** */
-function closeNav() {
+/* Sidepanel Functions */
+/*
+function openPanel() {
+navList.classList.toggle("open");
+navList.style.width = "18rem";
+}
+
+function closePanel() {
   navList.style.width = "0";
   navList.classList.toggle("open");
 }
+
+function togglePanel (e) {
+  if (navList.classList.contains("open") && !navList.contains(e.target)) {
+    closePanel();
+  } else if (e.target.className === "openbtn") {
+    openPanel()
+  }
+}
+*/
 
 /**
  * End Helper Functions
@@ -122,57 +131,21 @@ function closeNav() {
 // build the nav
 createNavItems();
 
-// Add class 'active' to section when near top of viewport
-
-/**Add class 'active' to section when near top of viewport*/
-function goToSection(e) {
-  scrollTo(e);
-}
-
-function toggleNav (e) {
-  if (navList.classList.contains("open") && !navList.contains(e.target)) {
-    closeNav();
-  } else if (e.target.className === "openbtn") {
-    openNav()
-  }
-}
-
-function hash(e) {
-  for (const section of sections) {
-    if (location.hash === "#" + section.id) {
-      console.log(section.id + "is active");
-      section.classList.add("your-active-class");
-        } else {
-          console.log(section.id + "is not active");
-        //Remove active state from other section
-        section.classList.remove("your-active-class");
-        }
-    }
-  }
-
-// Scroll to anchor ID using scrollTO event
 /**
  * End Main Functions
  * Begin Events
  *
 */
 
-// Build menu
- 
 // Scroll to section on link click
-/**
- * Scroll to section on link click
- * Set sections as active
- */
-navList.addEventListener("click", goToSection);
-
-/** */
-document.addEventListener("click", toggleNav);
+document.addEventListener('click', scrollToSection);
 
 // Set sections as active
-//document.addEventListener("scroll", makeActive);
-window.addEventListener('hashchange', hash);
+window.addEventListener('scroll', makeActive);
 
-
+/* Side Panel Event Listeners */
+/*
+document.addEventListener("click", togglePanel);
+*/
 
 
