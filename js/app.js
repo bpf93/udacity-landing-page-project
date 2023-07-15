@@ -34,36 +34,37 @@ let links;
 */
 
 /**
- * 
+ * Creates a list item with a navigational link for each section on the page
  */
 function createNavItems() {
-  for (let i = 0; i < sections.length; i++) {
-    //Create list item and add to document fragment
+  //For each section, create a list item and add it the document fragment
+  sections.forEach(section => {
     const li = document.createElement("li");
     docFragment.appendChild(li);
-    //Create anchor and append to list item
+    //Create an anchor and append it to the list item
     const a = document.createElement("a");
     li.appendChild(a);
-    //Set text and attribute for anchor
-    a.innerHTML = sections[i].dataset.nav;
-    a.setAttribute("href", "#" + sections[i].id);
+    //Set the text of the anchor to correspond with section's data-nav attribute
+    a.innerHTML = section.dataset.nav;
+    //Set the href attribute of the anchor to correspond to the section's id
+    a.setAttribute("href", "#" + section.id);
+    //Add menu__link class to each anchor
     a.classList.add("menu__link");
-  }
+  })
   //Append document fragment to ul
   navList.append(docFragment);
   //Make NodeList of links
   links = document.querySelectorAll('.navbar__menu .menu__link');
 }
 
-//Scroll to anchor ID using scrollTO event
-
 /**
- * Iterates over sections NodeList to get the section that corresponds to the link clicked
- *Scrolls to section and makes it active 
+ * Scroll to section whose id corresponds to href of the link clicked
  */
 function scrollToSection(e) {
-  e.preventDefault();
+  //Prevents default behavior (of jumping to section) when link is clicked
+  e.preventDefault(); 
   sections.forEach(section => {
+    //If the section's id corresponds to the link's href, scroll the section into view
     if (e.target.href.includes(section.id)) {
       section.scrollIntoView({
       behavior: "smooth"
@@ -72,15 +73,18 @@ function scrollToSection(e) {
   })
 }
 
-/** */
+/** Set section and corresponding link as active when section is in viewport */
 function makeActive(){
 //Declare a variable to store targeted section
-  let target;
-  sections.forEach( section => {
+  let target; 
+  sections.forEach(section => {
+    //Declare a variable that stores information regarding the position of the section relative to the viewport
     const rect = section.getBoundingClientRect();
-    //If section is within viewport parameters, set as the target and add 'active' class to it
+    //Determine if top and bottom of section are within viewport parameters
     if (rect.top <= 150 && rect.bottom >= 150) {
+      //If conditions are met, set section as target based on it's id
       target = section.id;
+      //Add 'active' class to section
       section.classList.add('your-active-class');
     }
     //If section is not within parameters, remove 'active' class from it
@@ -88,8 +92,7 @@ function makeActive(){
       section.classList.remove('your-active-class');
     }
   })
-  //Iterate over each link
-  links.forEach( link => {
+  links.forEach(link => {
     //If the link's href matches the targeted section's id, add "active" class to the link
     if (link.href.includes(target)) {
       link.classList.add("active");
@@ -128,7 +131,7 @@ function togglePanel (e) {
  * 
 */
 
-// build the nav
+// Build the nav
 createNavItems();
 
 /**
@@ -137,10 +140,10 @@ createNavItems();
  *
 */
 
-// Scroll to section on link click
+//Scroll to section on click
 document.addEventListener('click', scrollToSection);
 
-// Set sections as active
+//Set section and corresponding link as active when section is scrolled into viewport
 window.addEventListener('scroll', makeActive);
 
 /* Side Panel Event Listeners */

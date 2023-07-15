@@ -62,7 +62,6 @@ section {
 
 
 /* ---- Module Rules ---- */
-
 /* Sidepanel Styling */
 /*.sidepanel  {
     display: flex;
@@ -109,7 +108,6 @@ section {
 */
 
 /* Scrollbar */
-
 html::-webkit-scrollbar,
 .sidepanel::-webkit-scrollbar {
     width: 1rem;
@@ -128,15 +126,17 @@ html::-webkit-scrollbar-thumb,
 }
 
 /* Navigation Styles*/
-/*.navbar__menu {
+/*
+.navbar__menu {
     display: flex;
     justify-content: flex-end;
 }
 */
+
 .navbar__menu ul {
     padding-left: 0;
     margin: 0;
-    text-align: center;
+    text-align: right;
 }
 
 .navbar__menu li {
@@ -161,6 +161,10 @@ html::-webkit-scrollbar-thumb,
     background: #333;
     color: #fff;
     transition: ease 0.3s all;
+}
+
+.active {
+    background: #add8e6;
 }
 
 /* Header Styles */
@@ -295,8 +299,4 @@ section.your-active-class .landing__container::after {
 		           translate(-1em) 
 		           rotate(-360deg);
 	}
-}
-
-.active {
-    background: #add8e6;
 }
