@@ -3,9 +3,7 @@
 ## Table of Contents
 
 - [Description](#description)
-- [Details](#details)
-- [Demo](#demo)
-- [Usage](#usage)
+- [Navigating the Project](#navigating-the-project)
 - [Tools](#tools)
 
 
@@ -20,15 +18,10 @@ The original code is provided [here](https://github.com/udacity/cd0428-landing-p
 
 [(Back to top)](#table-of-contents)
 
-## Details
+## Navigating the Project
 When navigating the project within a browser:
 - When you click on a link, it will scroll to the corresponding section. The section will have a class of "your-active-class". Any previous active section will have this class removed.
 - When you scroll, the section within the viewport will have a translucent background and animated circles and the corresponding link with be highlighted in light blue.
-
-[(Back to top)](#table-of-contents)
-
-## Usage
-You can fork the project to look at the code or see how it operates in a browser.
 
 [(Back to top)](#table-of-contents)
 
